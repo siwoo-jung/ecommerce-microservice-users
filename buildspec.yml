@@ -1,0 +1,15 @@
+# buildspec.yml
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo "zipping.."
+      - zip -r9 myFunc.zip .
+
+  post_build:
+    commands:
+      - aws lambda update-function-code --function-name $LAMBDA_FUNCTION --zip-file fileb://myFunc.zip
